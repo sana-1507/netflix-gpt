@@ -1,7 +1,11 @@
 import { useRef, useState } from "react";
 import Header from "./Header";
 import { checkSignInForm } from "../utils/validate";
-// import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -11,11 +15,9 @@ const Login = () => {
     console.log("called");
   };
 
-  
-
   const email = useRef(null);
   const password = useRef(null);
- const fullName = useRef(null);
+  const fullName = useRef(null);
 
   const validateFormData = (e) => {
     e.preventDefault();
@@ -23,10 +25,35 @@ const Login = () => {
       email.current.value,
       password.current.value
     );
+    console.log(message);
     setErrorMessage(message);
+    if (message) return; // 🚫 Stop if validation fails
 
-    if(message === null) {
-
+    console.log(isSignInForm);
+    if (!isSignInForm) {
+      try {
+        const userCredential = createUserWithEmailAndPassword(
+          auth,
+          email.current.value,
+          password.current.value
+        );
+        const user = userCredential.user;
+        console.log("User signed up:", user);
+      } catch (error) {
+        console.log(error);
+        setErrorMessage(`${error.code}: ${error.message}`);
+      }
+    } else {
+      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          setErrorMessage(`${error.code}: ${error.message}`);
+        });
     }
   };
 
@@ -51,7 +78,8 @@ const Login = () => {
         {!isSignInForm && (
           <input
             className="text-shadow-white p-2 m-6 mb-0 border-2 border-transparent bg-neutral-800"
-            type="text" ref={fullName}
+            type="text"
+            ref={fullName}
             placeholder="Full Name"
           />
         )}
@@ -77,10 +105,10 @@ const Login = () => {
         </button>
         <div className="flex flex-row relative ml-4">
           <p className="m-1 p-2 font-bold">
-            {isSignInForm ? "Already Registered?" : "New to Netflix?"}
+            {isSignInForm ? "New to Netflix?" : "Already Registered?"}
           </p>
           <button className="m-1 p-2" type="button" onClick={toggleSignUp}>
-            {isSignInForm ? "Sign In" : "Sign Up Now"}
+            {isSignInForm ? "Sign Up Now" : "Sign In"}
           </button>
         </div>
       </form>
