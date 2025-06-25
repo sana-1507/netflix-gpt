@@ -1,8 +1,8 @@
 
 import './App.css'
-// import { Outlet } from "react-router-dom";
-import Header from './components/Header'
-import Login from './components/Login'
+import appStore from './utils/appStore'
+import { Provider } from "react-redux";
+import Body from './components/Body';
 
 function App() {
 
@@ -11,8 +11,8 @@ function App() {
       {/* <h1 className=' font-bold text-xs'>Let's build Netflix GPT</h1> */}
       {/* <Header />
        */}
-       <Login />
-
+       {/* <Login /> */}
+       <Provider store={appStore}><Body /></Provider>
     </>
   )
 }

@@ -10,6 +10,8 @@
  - Form Validation/useRef Hook
    - Redirection to Browsing page
 - Browse Page (after authentication)
+ - Added sign out button/functionality
+ - Setup Redux store
 - Header
  - Searchbar
 - Main Movie Carousel
