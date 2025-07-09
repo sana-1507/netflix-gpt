@@ -31,3 +31,8 @@
    - GPT Movie Suggestions Page
    - Implemented openAI GPT model to get movie suggestions
    - Rendered the GPT results as movie list on Netflix GPT UI 
+
+## 📸 Project Screenshot
+
+![Sign in page Screenshot](./screenshots/netflix-gpt1.jpg)
+![Homepage Screenshot](./screenshots/netflix-gpt2.jpg)
