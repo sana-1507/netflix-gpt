@@ -14,7 +14,6 @@ const Login = () => {
   const navigate = useNavigate();
   const toggleSignUp = () => {
     setIsSignInForm(!isSignInForm);
-    console.log("called");
   };
 
   const email = useRef(null);
@@ -27,11 +26,9 @@ const Login = () => {
       email.current.value,
       password.current.value
     );
-    console.log(message);
     setErrorMessage(message);
     if (message) return; // 🚫 Stop if validation fails
 
-    console.log(isSignInForm);
     if (!isSignInForm) {
       try {
         const userCredential = createUserWithEmailAndPassword(
@@ -41,18 +38,21 @@ const Login = () => {
         );
         const user = userCredential.user;
         console.log("User signed up:", user);
-                navigate("/browse");
+        navigate("/browse");
       } catch (error) {
         console.log(error);
         setErrorMessage(`${error.code}: ${error.message}`);
       }
     } else {
-      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-                  navigate("/browse");
+          navigate("/browse");
           // ...
         })
         .catch((error) => {

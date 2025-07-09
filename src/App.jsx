@@ -7,13 +7,13 @@ import Body from './components/Body';
 function App() {
 
   return (
-    <>
+    <div>
       {/* <h1 className=' font-bold text-xs'>Let's build Netflix GPT</h1> */}
       {/* <Header />
        */}
        {/* <Login /> */}
        <Provider store={appStore}><Body /></Provider>
-    </>
+    </div>
   )
 }
 
